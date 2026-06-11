@@ -992,7 +992,7 @@
 // CONFIG — fill this in after deploying your Apps Script
 // ──────────────────────────────────────────────────────────────
 const CONFIG = {
-  scriptUrl: localStorage.getItem('qwq_script_url') || '',
+  scriptUrl: localStorage.getItem('qwq_script_url') || 'https://script.google.com/macros/s/AKfycbyl9CZqcEdRPKj1y86e5RYEEFN51J-JpZ6TXNZ-FdPBoWuI80Yz987wcZOSDVV9Ijeh6Q/exec',
   adminPassword: 'quest',   // ← change before sharing!
   pointsPlaceholder: {             // ← update when prizes are decided
     june: 5,
@@ -1433,10 +1433,3 @@ function esc(str) {
 
   // Pre-fill setup URL field if saved
   if (CONFIG.scriptUrl) {
-    document.getElementById('setup-url').value = CONFIG.scriptUrl;
-  }
-})();
-</script>
-</body>
-</html>
-          
