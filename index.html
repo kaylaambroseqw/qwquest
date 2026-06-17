@@ -627,30 +627,30 @@
   </div>
 
   <div class="month-cards">
-    <!-- June -->
+    <!-- Phase 1 -->
     <div class="month-card active-month" id="card-june">
       <div class="badge badge-active">🟡 Active Now</div>
-      <h2>🚶 June: Move &amp; Groove</h2>
+      <h2>🚶 Phase 1: Move &amp; Groove</h2>
       <p class="tagline">Steps, strides, and spins</p>
       <p>Complete at least 30 minutes of movement each day — walking, running, biking, hiking, dancing, or anything that gets you going!</p>
       <div class="dates">📅 June 21 – July 20, 2026</div>
       <button class="card-action" onclick="showPage('submit'); showMonthTab('june')">Log Today's Activity →</button>
     </div>
-    <!-- July -->
+    <!-- Phase 2 -->
     <div class="month-card upcoming" id="card-july">
       <div class="badge badge-upcoming">⏳ Coming July 21</div>
-      <h2>🥗 July: Nourish &amp; Flourish</h2>
+      <h2>🥗 Phase 2: Nourish &amp; Flourish</h2>
       <p class="tagline">Sharing healthy recipes and fueling well-being</p>
       <p>Submit your favorite healthy recipes — from energizing breakfasts to guilt-free desserts. Help build the ultimate QW Cookbook!</p>
       <div class="dates">📅 July 21 – Aug 20, 2026</div>
       <button class="card-action" onclick="showPage('submit'); showMonthTab('july')">Submit a Recipe →</button>
     </div>
-    <!-- August -->
+    <!-- Phase 3 -->
     <div class="month-card upcoming" id="card-august">
       <div class="badge badge-upcoming">⏳ Coming Aug 21</div>
-      <h2>🌾 August: Rest &amp; Reap</h2>
+      <h2>🌾 Phase 3: Rest &amp; Reap</h2>
       <p class="tagline">Harvesting calm through sleep, mindfulness, and meditation</p>
-      <p>Recharge with mindfulness, hit your sleep goals, take digital detoxes, and share gratitude notes with the team.</p>
+      <p>Recharge with mindfulness, hit your sleep goals, and share gratitude notes with the team.</p>
       <div class="dates">📅 Aug 21 – Sep 20, 2026</div>
       <button class="card-action" onclick="showPage('submit'); showMonthTab('august')">Log a Mindful Moment →</button>
     </div>
@@ -671,15 +671,15 @@
   <h1 class="section-title">Submit Your Entry</h1>
 
   <div class="month-tabs">
-    <button class="mtab active" id="tab-june" onclick="showMonthTab('june')">🚶 June – Move &amp; Groove</button>
-    <button class="mtab" id="tab-july" onclick="showMonthTab('july')">🥗 July – Nourish &amp; Flourish</button>
-    <button class="mtab" id="tab-august" onclick="showMonthTab('august')">🌾 August – Rest &amp; Reap</button>
+    <button class="mtab active" id="tab-june" onclick="showMonthTab('june')">🚶 Phase 1 – Move &amp; Groove</button>
+    <button class="mtab" id="tab-july" onclick="showMonthTab('july')">🥗 Phase 2 – Nourish &amp; Flourish</button>
+    <button class="mtab" id="tab-august" onclick="showMonthTab('august')">🌾 Phase 3 – Rest &amp; Reap</button>
   </div>
 
   <!-- JUNE FORM -->
   <div class="form-panel active" id="panel-june">
     <div class="form-card">
-      <h2>🚶 Move &amp; Groove — Activity Log</h2>
+      <h2>🚶 Phase 1: Move &amp; Groove — Activity Log</h2>
       <p class="subtitle">Log at least 30 minutes of movement per day. Every entry earns points! Challenge runs <strong>June 21 – July 20</strong>.</p>
       <form id="form-june" onsubmit="submitForm(event, 'june')">
         <div class="form-row">
@@ -756,7 +756,7 @@
   <!-- JULY FORM -->
   <div class="form-panel" id="panel-july">
     <div class="form-card">
-      <h2>🥗 Nourish &amp; Flourish — Recipe Submission</h2>
+      <h2>🥗 Phase 2: Nourish &amp; Flourish — Recipe Submission</h2>
       <p class="subtitle">Share a healthy recipe and help build the QW Cookbook! Every recipe earns points. Challenge runs <strong>July 21 – August 20</strong>.</p>
       <form id="form-july" onsubmit="submitForm(event, 'july')">
         <div class="form-row">
@@ -832,7 +832,7 @@
   <!-- AUGUST FORM -->
   <div class="form-panel" id="panel-august">
     <div class="form-card">
-      <h2>🌾 Rest &amp; Reap — Mindfulness Log</h2>
+      <h2>🌾 Phase 3: Rest &amp; Reap — Mindfulness Log</h2>
       <p class="subtitle">Track your rest and mindfulness activities. Every completed activity earns points. Challenge runs <strong>August 21 – September 20</strong>.</p>
       <form id="form-august" onsubmit="submitForm(event, 'august')">
         <div class="form-row">
@@ -865,9 +865,6 @@
             </label>
             <label class="check-item" onclick="toggleCheck(this)">
               <input type="checkbox" name="activities" value="Sleep goal met" />😴 Met Sleep Goal
-            </label>
-            <label class="check-item" onclick="toggleCheck(this)">
-              <input type="checkbox" name="activities" value="Digital detox" />📵 Digital Detox
             </label>
             <label class="check-item" onclick="toggleCheck(this)">
               <input type="checkbox" name="activities" value="Gratitude/affirmation" />🙏 Gratitude / Affirmation
@@ -918,9 +915,9 @@
 
   <div class="lb-controls">
     <button class="lb-filter active" onclick="filterLB('all', this)">All-Time</button>
-    <button class="lb-filter" onclick="filterLB('june', this)">🚶 June</button>
-    <button class="lb-filter" onclick="filterLB('july', this)">🥗 July</button>
-    <button class="lb-filter" onclick="filterLB('august', this)">🌾 August</button>
+    <button class="lb-filter" onclick="filterLB('june', this)">🚶 Phase 1</button>
+    <button class="lb-filter" onclick="filterLB('july', this)">🥗 Phase 2</button>
+    <button class="lb-filter" onclick="filterLB('august', this)">🌾 Phase 3</button>
     <input class="lb-search" id="lb-search" type="text" placeholder="Search by name…" oninput="renderLB()" />
     <button onclick="loadLeaderboard()" style="background:var(--gray-100);border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:.875rem;font-weight:600;">🔄 Refresh</button>
   </div>
@@ -1203,7 +1200,7 @@ function renderLB() {
 
   const rankSymbols = ['🥇','🥈','🥉'];
   document.getElementById('lb-body').innerHTML = sorted.map((p, i) => {
-    const months = [...p.months].map(m => `<span class="month-tag tag-${m}">${{june:'🚶 June',july:'🥗 July',august:'🌾 Aug'}[m]||m}</span>`).join(' ');
+    const months = [...p.months].map(m => `<span class="month-tag tag-${m}">${{june:'🚶 Phase 1',july:'🥗 Phase 2',august:'🌾 Phase 3'}[m]||m}</span>`).join(' ');
     return `<div class="lb-full-row ${i < 3 ? 'top3' : ''}">
       <div class="rank-num">${i < 3 ? rankSymbols[i] : i+1}</div>
       <div><div class="participant-name">${esc(p.name)}</div><div class="participant-dept">${esc(p.email||'')}</div></div>
@@ -1317,7 +1314,7 @@ function renderAdminTab(tab) {
     container.innerHTML = `<div class="empty-state"><div class="es-icon">${{pending:'⏳',approved:'✅',rejected:'❌'}[tab]}</div><p>No ${tab} entries.</p></div>`;
     return;
   }
-  const monthLabels = { june: '🚶 June – Move & Groove', july: '🥗 July – Nourish & Flourish', august: '🌾 August – Rest & Reap' };
+  const monthLabels = { june: '🚶 Phase 1 – Move & Groove', july: '🥗 Phase 2 – Nourish & Flourish', august: '🌾 Phase 3 – Rest & Reap' };
   container.innerHTML = items.map(item => {
     const defaultPts = CONFIG.pointsPlaceholder[item.month] || 10;
     const bodyLines = [];
@@ -1439,3 +1436,5 @@ function esc(str) {
 </script>
 </body>
 </html>
+    document.getElementById('setup-url').value = CONFIG.scriptUrl;
+  }
