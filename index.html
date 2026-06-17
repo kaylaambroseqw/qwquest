@@ -116,7 +116,7 @@
     .hero-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,158,11,.5); }
 
     /* ── MONTH CARDS ── */
-    .month-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+    .month-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; align-items: stretch; }
     .month-card {
       background: var(--white);
       border-radius: var(--radius);
@@ -126,7 +126,11 @@
       transition: border-color .2s, transform .15s;
       cursor: pointer;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
+    .month-card p { flex-grow: 1; }
+    .month-card .card-action { margin-top: auto; }
     .month-card:hover { transform: translateY(-3px); }
     .month-card.active-month { border-color: var(--sun); }
     .month-card.upcoming { opacity: .75; }
@@ -143,10 +147,11 @@
     .badge-active { background: #FEF3C7; color: #92400E; }
     .badge-upcoming { background: var(--gray-100); color: var(--gray-600); }
     .badge-past { background: var(--green-light); color: #065F46; }
-    .month-card h2 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; }
+    .pi-badge-approved { background: var(--green-light); color: #065F46; font-size:.75rem; font-weight:700; padding:4px 10px; border-radius:100px; white-space:nowrap; align-self:flex-start; }
+    .month-card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
     .month-card .tagline { font-size: .9rem; color: var(--gray-600); margin-bottom: 12px; font-style: italic; }
     .month-card p { font-size: .875rem; color: var(--gray-600); line-height: 1.6; margin-bottom: 16px; }
-    .month-card .dates { font-size: .8rem; color: var(--gray-400); display: flex; align-items: center; gap: 6px; }
+    .month-card .dates { font-size: .8rem; color: var(--gray-400); display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
     .card-action {
       margin-top: 16px;
       background: var(--sun);
@@ -623,35 +628,35 @@
   <div class="hero">
     <h1>☀️ Quantum Wellness Quest</h1>
     <p>Health isn't just one thing — it's movement, nourishment, and mindset. This summer, we're taking on all three. Earn points, climb the leaderboard, and win prizes along the way!</p>
-    <button class="hero-cta" onclick="showPage('submit')">Submit Your Entry 🚀</button>
+    <p style="font-weight:700;font-size:.85rem;color:var(--gray-800);max-width:500px;margin:0 auto;line-height:1.7;">✨ Remember: The ultimate prize isn't just what's at the top of the leaderboard—it's feeling stronger, healthier, and more balanced by the end of the summer. Happy questing! 🏆</p>
   </div>
 
   <div class="month-cards">
     <!-- Phase 1 -->
-    <div class="month-card active-month" id="card-june">
-      <div class="badge badge-active">🟡 Active Now</div>
+    <div class="month-card" id="card-june">
+      <div id="badge-june" class="badge badge-active">🟡 Active Now</div>
+      <div class="dates">📅 June 21 – July 20, 2026</div>
       <h2>🚶 Phase 1: Move &amp; Groove</h2>
       <p class="tagline">Steps, strides, and spins</p>
       <p>Complete at least 30 minutes of movement each day — walking, running, biking, hiking, dancing, or anything that gets you going!</p>
-      <div class="dates">📅 June 21 – July 20, 2026</div>
       <button class="card-action" onclick="showPage('submit'); showMonthTab('june')">Log Today's Activity →</button>
     </div>
     <!-- Phase 2 -->
-    <div class="month-card upcoming" id="card-july">
-      <div class="badge badge-upcoming">⏳ Coming July 21</div>
+    <div class="month-card" id="card-july">
+      <div id="badge-july" class="badge badge-upcoming">⏳ Coming July 21</div>
+      <div class="dates">📅 July 21 – August 20, 2026</div>
       <h2>🥗 Phase 2: Nourish &amp; Flourish</h2>
       <p class="tagline">Sharing healthy recipes and fueling well-being</p>
       <p>Submit your favorite healthy recipes — from energizing breakfasts to guilt-free desserts. Help build the ultimate QW Cookbook!</p>
-      <div class="dates">📅 July 21 – Aug 20, 2026</div>
       <button class="card-action" onclick="showPage('submit'); showMonthTab('july')">Submit a Recipe →</button>
     </div>
     <!-- Phase 3 -->
-    <div class="month-card upcoming" id="card-august">
-      <div class="badge badge-upcoming">⏳ Coming Aug 21</div>
+    <div class="month-card" id="card-august">
+      <div id="badge-august" class="badge badge-upcoming">⏳ Coming August 21</div>
+      <div class="dates">📅 August 21 – September 20, 2026</div>
       <h2>🌾 Phase 3: Rest &amp; Reap</h2>
       <p class="tagline">Harvesting calm through sleep, mindfulness, and meditation</p>
       <p>Recharge with mindfulness, hit your sleep goals, and share gratitude notes with the team.</p>
-      <div class="dates">📅 Aug 21 – Sep 20, 2026</div>
       <button class="card-action" onclick="showPage('submit'); showMonthTab('august')">Log a Mindful Moment →</button>
     </div>
   </div>
@@ -678,9 +683,25 @@
 
   <!-- JUNE FORM -->
   <div class="form-panel active" id="panel-june">
+    <div class="rules-card" style="background:var(--sun-light);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;max-width:700px;">
+      <p style="font-size:.95rem;color:var(--gray-800);margin-bottom:16px;line-height:1.7;">Let's kick off summer by moving! Whether you're walking, running, biking, hiking, dancing, or doing cartwheels across the living room (safely, of course), the goal is simple: 30 minutes of movement a day.</p>
+      <p style="font-weight:700;font-size:1rem;margin-bottom:12px;">⭐ How to participate:</p>
+      <ul style="list-style:disc;padding-left:20px;font-size:.9rem;color:var(--gray-800);line-height:2;">
+        <li>Complete at least 30 minutes of movement each day</li>
+        <li>Check the leaderboard to track your progress</li>
+        <li>Keep moving and climbing!</li>
+      </ul>
+      <p style="font-weight:700;font-size:1rem;margin-top:16px;margin-bottom:12px;">🏆 How to win:</p>
+      <ul style="list-style:disc;padding-left:20px;font-size:.9rem;color:var(--gray-800);line-height:2;">
+        <li>Top 5 — extra 100 Qoins at close</li>
+        <li>Top 10 — extra 50 Qoins at close</li>
+        <li>Top 20 — extra 25 Qoins at close</li>
+        <li>Participation — 5 points for each entry</li>
+      </ul>
+    </div>
     <div class="form-card">
       <h2>🚶 Phase 1: Move &amp; Groove — Activity Log</h2>
-      <p class="subtitle">Log at least 30 minutes of movement per day. Every entry earns points! Challenge runs <strong>June 21 – July 20</strong>.</p>
+      <p class="subtitle">Log at least 30 minutes of movement per day. Challenge runs <strong>June 21 – July 20</strong>.</p>
       <form id="form-june" onsubmit="submitForm(event, 'june')">
         <div class="form-row">
           <div class="form-group">
@@ -747,7 +768,7 @@
           <span class="btn-text">Log Activity 🏃</span>
           <div class="spinner" id="spin-june"></div>
         </button>
-        <div class="success-banner" id="ok-june">✅ Your activity was submitted! It will appear on the leaderboard once approved.</div>
+        <div class="success-banner" id="ok-june">✅ Your activity was submitted! You've earned 5 points — check the leaderboard!</div>
         <div class="error-banner" id="err-june"></div>
       </form>
     </div>
@@ -755,9 +776,22 @@
 
   <!-- JULY FORM -->
   <div class="form-panel" id="panel-july">
+    <div class="rules-card" style="background:#D1FAE5;border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;max-width:700px;">
+      <p style="font-size:.95rem;color:var(--gray-800);margin-bottom:16px;line-height:1.7;">Good food deserves to be shared. This month, we're building the ultimate QW Cookbook one recipe at a time. From energizing breakfasts and crowd-pleasing dinners to guilt-free desserts and refreshing drinks, we want your favorites! Every submission earns points, and together we'll create a resource the whole company can enjoy.</p>
+      <p style="font-weight:700;font-size:1rem;margin-bottom:12px;">⭐ How to participate: <span style="font-weight:500;font-size:.85rem;">(Limit: 1 submission per day!)</span></p>
+      <ul style="list-style:disc;padding-left:20px;font-size:.9rem;color:var(--gray-800);line-height:2;">
+        <li>Earn points for each recipe contributed</li>
+        <li>Include photos if you'd like to show off your culinary skills!</li>
+        <li>Watch the QW Cookbook come to life!</li>
+      </ul>
+      <p style="font-weight:700;font-size:1rem;margin-top:16px;margin-bottom:12px;">🏆 How to win:</p>
+      <ul style="list-style:disc;padding-left:20px;font-size:.9rem;color:var(--gray-800);line-height:2;">
+        <li>Earn 5 Qoins for each entry submission!</li>
+      </ul>
+    </div>
     <div class="form-card">
       <h2>🥗 Phase 2: Nourish &amp; Flourish — Recipe Submission</h2>
-      <p class="subtitle">Share a healthy recipe and help build the QW Cookbook! Every recipe earns points. Challenge runs <strong>July 21 – August 20</strong>.</p>
+      <p class="subtitle">Share a healthy recipe and help build the QW Cookbook! Challenge runs <strong>July 21 – August 20</strong>.</p>
       <form id="form-july" onsubmit="submitForm(event, 'july')">
         <div class="form-row">
           <div class="form-group">
@@ -823,7 +857,7 @@
           <span class="btn-text">Submit Recipe 🥗</span>
           <div class="spinner" id="spin-july"></div>
         </button>
-        <div class="success-banner" id="ok-july">✅ Recipe submitted! It will appear in the QW Cookbook and on the leaderboard once approved.</div>
+        <div class="success-banner" id="ok-july">✅ Recipe submitted! You've earned 5 points — check the leaderboard!</div>
         <div class="error-banner" id="err-july"></div>
       </form>
     </div>
@@ -831,9 +865,21 @@
 
   <!-- AUGUST FORM -->
   <div class="form-panel" id="panel-august">
+    <div class="rules-card" style="background:var(--purple-light);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;max-width:700px;">
+      <p style="font-size:.95rem;color:var(--gray-800);margin-bottom:16px;line-height:1.7;">You've moved. You've fueled. Now it's time to recharge. August is all about giving your mind and body the recovery they deserve. Earn points by practicing mindfulness, hitting your sleep goals, and sharing gratitude along the way. Small moments of rest can have a big impact!</p>
+      <p style="font-weight:700;font-size:1rem;margin-bottom:12px;">⭐ How to participate: <span style="font-weight:500;font-size:.85rem;">(Limit: 1 submission per day!)</span></p>
+      <ul style="list-style:disc;padding-left:20px;font-size:.9rem;color:var(--gray-800);line-height:2;">
+        <li>Each day, complete a 5-minute meditation, meet your sleep goals, or add affirmations/gratitude notes to the board</li>
+        <li>Watch yourself build better habits!</li>
+      </ul>
+      <p style="font-weight:700;font-size:1rem;margin-top:16px;margin-bottom:12px;">🏆 How to win:</p>
+      <ul style="list-style:disc;padding-left:20px;font-size:.9rem;color:var(--gray-800);line-height:2;">
+        <li>Earn 5 Qoins for each day you complete an activity.</li>
+      </ul>
+    </div>
     <div class="form-card">
       <h2>🌾 Phase 3: Rest &amp; Reap — Mindfulness Log</h2>
-      <p class="subtitle">Track your rest and mindfulness activities. Every completed activity earns points. Challenge runs <strong>August 21 – September 20</strong>.</p>
+      <p class="subtitle">Track your rest and mindfulness activities. Challenge runs <strong>August 21 – September 20</strong>.</p>
       <form id="form-august" onsubmit="submitForm(event, 'august')">
         <div class="form-row">
           <div class="form-group">
@@ -898,7 +944,7 @@
           <span class="btn-text">Log Mindful Moment 🌾</span>
           <div class="spinner" id="spin-august"></div>
         </button>
-        <div class="success-banner" id="ok-august">✅ Entry submitted! It will appear on the leaderboard once approved.</div>
+        <div class="success-banner" id="ok-august">✅ Entry submitted! You've earned 5 points — check the leaderboard!</div>
         <div class="error-banner" id="err-august"></div>
       </form>
     </div>
@@ -969,15 +1015,17 @@
   <div id="admin-panel-inner" class="admin-panel">
     <div class="stats-grid" id="admin-stats"></div>
 
-    <div class="admin-tabs">
-      <button class="admin-tab active" onclick="showAdminTab('pending', this)">⏳ Pending Review</button>
-      <button class="admin-tab" onclick="showAdminTab('approved', this)">✅ Approved</button>
-      <button class="admin-tab" onclick="showAdminTab('rejected', this)">❌ Rejected</button>
+    <div class="admin-filter-bar" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center;">
+      <button class="admin-tab active" onclick="filterAdmin('all',this)">All Entries</button>
+      <button class="admin-tab" onclick="filterAdmin('june',this)">🚶 Phase 1</button>
+      <button class="admin-tab" onclick="filterAdmin('july',this)">🥗 Phase 2</button>
+      <button class="admin-tab" onclick="filterAdmin('august',this)">🌾 Phase 3</button>
+      <input type="text" id="admin-search" placeholder="Search by name or email…" oninput="renderAdminEntries()"
+        style="margin-left:auto;padding:8px 14px;border:1px solid var(--gray-200);border-radius:8px;font-size:.875rem;min-width:200px;" />
+      <button onclick="loadAdminData()" style="background:var(--gray-100);border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:.875rem;font-weight:600;">🔄 Refresh</button>
     </div>
 
-    <div id="admin-tab-pending" class="pending-list"></div>
-    <div id="admin-tab-approved" class="pending-list" style="display:none;"></div>
-    <div id="admin-tab-rejected" class="pending-list" style="display:none;"></div>
+    <div id="admin-entries-list" class="pending-list"></div>
   </div>
 </div>
 
@@ -1255,7 +1303,6 @@ async function loadPreview() {
 // ADMIN
 // ──────────────────────────────────────────────────────────────
 let adminItems = [];
-let currentAdminTab = 'pending';
 
 function adminLogin() {
   const pw = document.getElementById('admin-pw').value;
@@ -1281,98 +1328,75 @@ async function loadAdminData() {
     adminItems = JSON.parse(localStorage.getItem('qwq_pending') || '[]');
   }
   renderAdminStats();
-  renderAdminTab(currentAdminTab);
+  renderAdminEntries();
 }
 
 function renderAdminStats() {
-  const pending = adminItems.filter(e => e.status === 'pending').length;
-  const approved = adminItems.filter(e => e.status === 'approved').length;
-  const rejected = adminItems.filter(e => e.status === 'rejected').length;
-  const totalPts = adminItems.filter(e => e.status === 'approved').reduce((s,e) => s + (e.points||0), 0);
+  const total = adminItems.length;
+  const phase1 = adminItems.filter(e => e.month === 'june').length;
+  const phase2 = adminItems.filter(e => e.month === 'july').length;
+  const phase3 = adminItems.filter(e => e.month === 'august').length;
+  const totalPts = adminItems.reduce((s,e) => s + (Number(e.points)||0), 0);
   document.getElementById('admin-stats').innerHTML = `
-    <div class="stat-card"><div class="sval" style="color:var(--sun)">${pending}</div><div class="slabel">Awaiting Review</div></div>
-    <div class="stat-card"><div class="sval" style="color:var(--green)">${approved}</div><div class="slabel">Approved</div></div>
-    <div class="stat-card"><div class="sval" style="color:var(--red)">${rejected}</div><div class="slabel">Rejected</div></div>
-    <div class="stat-card"><div class="sval" style="color:var(--purple)">${totalPts}</div><div class="slabel">Total Points Awarded</div></div>
+    <div class="stat-card"><div class="sval" style="color:var(--green)">${total}</div><div class="slabel">Total Entries</div></div>
+    <div class="stat-card"><div class="sval" style="color:var(--sun)">${phase1}</div><div class="slabel">🚶 Phase 1</div></div>
+    <div class="stat-card"><div class="sval" style="color:var(--blue)">${phase2}</div><div class="slabel">🥗 Phase 2</div></div>
+    <div class="stat-card"><div class="sval" style="color:var(--purple)">${phase3}</div><div class="slabel">🌾 Phase 3</div></div>
+    <div class="stat-card"><div class="sval" style="color:var(--green)">${totalPts}</div><div class="slabel">Total Points</div></div>
   `;
 }
 
-function showAdminTab(tab, btn) {
-  currentAdminTab = tab;
-  ['pending','approved','rejected'].forEach(t => {
-    document.getElementById('admin-tab-'+t).style.display = t === tab ? 'flex' : 'none';
-  });
+let adminFilter = 'all';
+
+function filterAdmin(filter, btn) {
+  adminFilter = filter;
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
-  renderAdminTab(tab);
+  renderAdminEntries();
 }
 
-function renderAdminTab(tab) {
-  const items = adminItems.filter(e => e.status === tab);
-  const container = document.getElementById('admin-tab-' + tab);
+function renderAdminEntries() {
+  const search = (document.getElementById('admin-search')?.value || '').toLowerCase();
+  let items = adminItems;
+  if (adminFilter !== 'all') items = items.filter(e => e.month === adminFilter);
+  if (search) items = items.filter(e =>
+    ((e.firstName||'')+' '+(e.lastName||'')).toLowerCase().includes(search) ||
+    (e.email||'').toLowerCase().includes(search)
+  );
+
+  const container = document.getElementById('admin-entries-list');
   if (!items.length) {
-    container.innerHTML = `<div class="empty-state"><div class="es-icon">${{pending:'⏳',approved:'✅',rejected:'❌'}[tab]}</div><p>No ${tab} entries.</p></div>`;
+    container.innerHTML = `<div class="empty-state"><div class="es-icon">📋</div><p>No entries found.</p></div>`;
     return;
   }
+
   const monthLabels = { june: '🚶 Phase 1 – Move & Groove', july: '🥗 Phase 2 – Nourish & Flourish', august: '🌾 Phase 3 – Rest & Reap' };
-  container.innerHTML = items.map(item => {
-    const defaultPts = CONFIG.pointsPlaceholder[item.month] || 10;
+  const sorted = [...items].sort((a,b) => new Date(b.timestamp||0) - new Date(a.timestamp||0));
+
+  container.innerHTML = sorted.map(item => {
     const bodyLines = [];
-    if (item.activityType) bodyLines.push(`<strong>Activity:</strong> ${esc(item.activityType)} — ${esc(item.duration||'')} min`);
-    if (item.recipeName) bodyLines.push(`<strong>Recipe:</strong> ${esc(item.recipeName)} (${esc(item.category||'')})`);
+    if (item.activityType) bodyLines.push(`<strong>Activity:</strong> ${esc(item.activityType)}${item.duration ? ' — '+esc(item.duration)+' min' : ''}`);
+    if (item.recipeName) bodyLines.push(`<strong>Recipe:</strong> ${esc(item.recipeName)}${item.category ? ' ('+esc(item.category)+')' : ''}`);
     if (item.ingredients) bodyLines.push(`<strong>Ingredients:</strong> ${esc(item.ingredients)}`);
     if (item.instructions) bodyLines.push(`<strong>Instructions:</strong> ${esc(item.instructions)}`);
     if (item.activities) bodyLines.push(`<strong>Activities:</strong> ${esc([].concat(item.activities).join(', '))}`);
-    if (item.notes) bodyLines.push(`<strong>Notes:</strong> ${esc(item.notes)}`);
     if (item.description) bodyLines.push(`<strong>Description:</strong> ${esc(item.description)}`);
-    const photoHtml = item.photoUrl ? `<div class="pi-photo"><img src="${item.photoUrl}" alt="submission photo" /></div>` :
-                      item.photo ? `<div class="pi-photo"><img src="${item.photo}" alt="submission photo" /></div>` : '';
-    const actionsHtml = tab === 'pending' ? `
-      <div class="pi-actions">
-        <label style="font-size:.8rem;font-weight:600;">Points:</label>
-        <input class="pi-pts-input" type="number" value="${defaultPts}" min="0" id="pts-${item.id}" />
-        <button class="pi-approve" onclick="reviewItem(${item.id}, 'approved')">✅ Approve</button>
-        <button class="pi-reject" onclick="reviewItem(${item.id}, 'rejected')">❌ Reject</button>
-      </div>` : '';
+    if (item.notes) bodyLines.push(`<strong>Notes:</strong> ${esc(item.notes)}`);
+    const photoHtml = item.photoUrl
+      ? `<div class="pi-photo"><a href="${item.photoUrl}" target="_blank"><img src="${item.photoUrl}" alt="submission photo" /></a></div>`
+      : '';
     return `<div class="pending-item" id="item-${item.id}">
       <div class="pi-header">
         <div>
           <div class="pi-name">${esc((item.firstName||'')+' '+(item.lastName||''))}</div>
-          <div class="pi-meta">${esc(item.email||'')} · ${monthLabels[item.month]||item.month} · ${item.date||''} · Submitted ${new Date(item.timestamp||'').toLocaleDateString()}</div>
+          <div class="pi-meta">${esc(item.email||'')} · ${monthLabels[item.month]||item.month} · Date: ${item.date||'—'} · Submitted ${new Date(item.timestamp||'').toLocaleDateString()} · <strong>${Number(item.points)||5} pts</strong></div>
         </div>
-        ${actionsHtml}
+        <div class="pi-badge-approved">✅ Auto-Approved</div>
       </div>
-      <div class="pi-body">${bodyLines.join('<br/>')}</div>
+      ${bodyLines.length ? `<div class="pi-body">${bodyLines.join('<br/>')}</div>` : ''}
       ${photoHtml}
     </div>`;
   }).join('');
-}
-
-async function reviewItem(id, status) {
-  const ptsInput = document.getElementById('pts-' + id);
-  const points = ptsInput ? parseInt(ptsInput.value) || 0 : 0;
-
-  // Update local state
-  const item = adminItems.find(e => e.id == id);
-  if (!item) return;
-  item.status = status;
-  item.points = points;
-
-  if (CONFIG.scriptUrl) {
-    try {
-      await fetch(CONFIG.scriptUrl, {
-        method: 'POST',
-        body: JSON.stringify({ action: 'review', id, status, points, pw: CONFIG.adminPassword })
-      });
-    } catch (e) { /* best effort */ }
-  } else {
-    // Demo mode: persist to localStorage
-    localStorage.setItem('qwq_pending', JSON.stringify(adminItems));
-  }
-
-  renderAdminStats();
-  renderAdminTab(currentAdminTab);
-  loadPreview();
 }
 
 function saveScriptUrl() {
@@ -1400,6 +1424,50 @@ function esc(str) {
   if (!CONFIG.scriptUrl) {
     document.getElementById('config-banner').classList.add('visible');
   }
+
+  // ── Dynamic phase badges based on today's date ──
+  (function updatePhaseBadges() {
+    const now = new Date();
+    // Strip time so comparisons are date-only
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+    const phases = [
+      { id: 'june',   card: 'card-june',   badge: 'badge-june',
+        start: new Date(2026, 5, 21),  end: new Date(2026, 6, 20),   // June 21 – July 20
+        comingLabel: '⏳ Coming June 21' },
+      { id: 'july',   card: 'card-july',   badge: 'badge-july',
+        start: new Date(2026, 6, 21),  end: new Date(2026, 7, 20),   // July 21 – Aug 20
+        comingLabel: '⏳ Coming July 21' },
+      { id: 'august', card: 'card-august', badge: 'badge-august',
+        start: new Date(2026, 7, 21),  end: new Date(2026, 8, 20),   // Aug 21 – Sep 20
+        comingLabel: '⏳ Coming August 21' },
+    ];
+
+    phases.forEach(p => {
+      const card  = document.getElementById(p.card);
+      const badge = document.getElementById(p.badge);
+      if (!card || !badge) return;
+
+      if (today >= p.start && today <= p.end) {
+        // Active
+        card.classList.add('active-month');
+        card.classList.remove('upcoming');
+          badge.className = 'badge badge-active';
+        badge.textContent = '🟡 Active Now';
+      } else if (today > p.end) {
+        // Completed
+        card.classList.remove('active-month', 'upcoming');
+        badge.className = 'badge badge-past';
+        badge.textContent = '✅ Completed';
+      } else {
+        // Upcoming
+        card.classList.add('upcoming');
+        card.classList.remove('active-month');
+        badge.className = 'badge badge-upcoming';
+        badge.textContent = p.comingLabel;
+      }
+    });
+  })();
 
   // Set today's date as default for date fields
   const today = new Date().toISOString().split('T')[0];
@@ -1436,5 +1504,3 @@ function esc(str) {
 </script>
 </body>
 </html>
-    document.getElementById('setup-url').value = CONFIG.scriptUrl;
-  }
