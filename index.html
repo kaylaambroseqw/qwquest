@@ -74,8 +74,6 @@
     }
     .nav-btn:hover { background: var(--gray-100); color: var(--gray-800); }
     .nav-btn.active { background: var(--sun-light); color: #92400E; }
-    .nav-btn.admin-btn { color: var(--purple); }
-    .nav-btn.admin-btn:hover { background: var(--purple-light); }
 
     /* ── PAGES ── */
     .page { display: none; max-width: 1100px; margin: 0 auto; padding: 32px 24px; }
@@ -147,7 +145,6 @@
     .badge-active { background: #FEF3C7; color: #92400E; }
     .badge-upcoming { background: var(--gray-100); color: var(--gray-600); }
     .badge-past { background: var(--green-light); color: #065F46; }
-    .pi-badge-approved { background: var(--green-light); color: #065F46; font-size:.75rem; font-weight:700; padding:4px 10px; border-radius:100px; white-space:nowrap; align-self:flex-start; }
     .month-card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
     .month-card .tagline { font-size: .9rem; color: var(--gray-600); margin-bottom: 12px; font-style: italic; }
     .month-card p { font-size: .875rem; color: var(--gray-600); line-height: 1.6; margin-bottom: 16px; }
@@ -984,49 +981,6 @@
   </div>
 </div>
 
-<!-- ============================================================
-  ADMIN PAGE
-============================================================ -->
-<div id="page-admin" class="page">
-  <h1 class="section-title">🔐 Admin Panel</h1>
-
-  <!-- Login screen -->
-  <div id="admin-login-screen">
-    <div class="admin-login">
-      <div style="font-size:3rem;margin-bottom:12px;">🔐</div>
-      <h2>Admin Access</h2>
-      <p>Enter the admin password to manage submissions.</p>
-      <input type="password" id="admin-pw" placeholder="Password" onkeydown="if(event.key==='Enter')adminLogin()" />
-      <button class="admin-login-btn" onclick="adminLogin()">Sign In</button>
-      <div id="admin-err" style="color:var(--red);font-size:.8rem;margin-top:10px;"></div>
-
-      <!-- Setup section -->
-      <div style="margin-top:32px;border-top:1px solid var(--gray-200);padding-top:24px;text-align:left;">
-        <p style="font-weight:700;font-size:.875rem;margin-bottom:10px;">⚙️ Apps Script URL (one-time setup)</p>
-        <input type="text" id="setup-url" placeholder="https://script.google.com/macros/s/…/exec" style="margin-bottom:8px;" />
-        <button onclick="saveScriptUrl()" style="width:100%;background:var(--gray-100);border:none;padding:10px;border-radius:8px;font-size:.875rem;font-weight:600;cursor:pointer;">Save URL</button>
-        <p style="font-size:.75rem;color:var(--gray-400);margin-top:8px;">After deploying your Apps Script, paste the web app URL here. It is saved in your browser only.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- Admin panel (shown after login) -->
-  <div id="admin-panel-inner" class="admin-panel">
-    <div class="stats-grid" id="admin-stats"></div>
-
-    <div class="admin-filter-bar" style="display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap;align-items:center;">
-      <button class="admin-tab active" onclick="filterAdmin('all',this)">All Entries</button>
-      <button class="admin-tab" onclick="filterAdmin('june',this)">🚶 Phase 1</button>
-      <button class="admin-tab" onclick="filterAdmin('july',this)">🥗 Phase 2</button>
-      <button class="admin-tab" onclick="filterAdmin('august',this)">🌾 Phase 3</button>
-      <input type="text" id="admin-search" placeholder="Search by name or email…" oninput="renderAdminEntries()"
-        style="margin-left:auto;padding:8px 14px;border:1px solid var(--gray-200);border-radius:8px;font-size:.875rem;min-width:200px;" />
-      <button onclick="loadAdminData()" style="background:var(--gray-100);border:none;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:.875rem;font-weight:600;">🔄 Refresh</button>
-    </div>
-
-    <div id="admin-entries-list" class="pending-list"></div>
-  </div>
-</div>
 
 <!-- ============================================================
   SCRIPT
@@ -1037,7 +991,6 @@
 // ──────────────────────────────────────────────────────────────
 const CONFIG = {
   scriptUrl: localStorage.getItem('qwq_script_url') || 'https://script.google.com/macros/s/AKfycbyl9CZqcEdRPKj1y86e5RYEEFN51J-JpZ6TXNZ-FdPBoWuI80Yz987wcZOSDVV9Ijeh6Q/exec',
-  adminPassword: 'quest',   // ← change before sharing!
   pointsPlaceholder: {             // ← update when prizes are decided
     june: 5,
     july: 5,
@@ -1060,7 +1013,7 @@ function showPage(id) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + id).classList.add('active');
   const btns = document.querySelectorAll('.nav-btn');
-  const labels = ['home','submit','leaderboard','admin'];
+  const labels = ['home','submit','leaderboard'];
   labels.forEach((l, i) => { if (l === id) btns[i].classList.add('active'); });
   if (id === 'leaderboard') loadLeaderboard();
   if (id === 'home') loadPreview();
@@ -1299,116 +1252,6 @@ async function loadPreview() {
 }
 
 // ──────────────────────────────────────────────────────────────
-// ADMIN
-// ──────────────────────────────────────────────────────────────
-let adminItems = [];
-
-function adminLogin() {
-  const pw = document.getElementById('admin-pw').value;
-  if (pw === CONFIG.adminPassword) {
-    document.getElementById('admin-login-screen').style.display = 'none';
-    document.getElementById('admin-panel-inner').classList.add('visible');
-    loadAdminData();
-  } else {
-    document.getElementById('admin-err').textContent = 'Incorrect password.';
-  }
-}
-
-async function loadAdminData() {
-  if (CONFIG.scriptUrl) {
-    try {
-      const res = await fetch(CONFIG.scriptUrl + '?action=admin&pw=' + encodeURIComponent(CONFIG.adminPassword));
-      const json = await res.json();
-      adminItems = json.entries || [];
-    } catch (e) {
-      adminItems = JSON.parse(localStorage.getItem('qwq_pending') || '[]');
-    }
-  } else {
-    adminItems = JSON.parse(localStorage.getItem('qwq_pending') || '[]');
-  }
-  renderAdminStats();
-  renderAdminEntries();
-}
-
-function renderAdminStats() {
-  const total = adminItems.length;
-  const phase1 = adminItems.filter(e => e.month === 'june').length;
-  const phase2 = adminItems.filter(e => e.month === 'july').length;
-  const phase3 = adminItems.filter(e => e.month === 'august').length;
-  const totalPts = adminItems.reduce((s,e) => s + (Number(e.points)||0), 0);
-  document.getElementById('admin-stats').innerHTML = `
-    <div class="stat-card"><div class="sval" style="color:var(--green)">${total}</div><div class="slabel">Total Entries</div></div>
-    <div class="stat-card"><div class="sval" style="color:var(--sun)">${phase1}</div><div class="slabel">🚶 Phase 1</div></div>
-    <div class="stat-card"><div class="sval" style="color:var(--blue)">${phase2}</div><div class="slabel">🥗 Phase 2</div></div>
-    <div class="stat-card"><div class="sval" style="color:var(--purple)">${phase3}</div><div class="slabel">🌾 Phase 3</div></div>
-    <div class="stat-card"><div class="sval" style="color:var(--green)">${totalPts}</div><div class="slabel">Total Points</div></div>
-  `;
-}
-
-let adminFilter = 'all';
-
-function filterAdmin(filter, btn) {
-  adminFilter = filter;
-  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderAdminEntries();
-}
-
-function renderAdminEntries() {
-  const search = (document.getElementById('admin-search')?.value || '').toLowerCase();
-  let items = adminItems;
-  if (adminFilter !== 'all') items = items.filter(e => e.month === adminFilter);
-  if (search) items = items.filter(e =>
-    ((e.firstName||'')+' '+(e.lastName||'')).toLowerCase().includes(search) ||
-    (e.email||'').toLowerCase().includes(search)
-  );
-
-  const container = document.getElementById('admin-entries-list');
-  if (!items.length) {
-    container.innerHTML = `<div class="empty-state"><div class="es-icon">📋</div><p>No entries found.</p></div>`;
-    return;
-  }
-
-  const monthLabels = { june: '🚶 Phase 1 – Move & Groove', july: '🥗 Phase 2 – Nourish & Flourish', august: '🌾 Phase 3 – Rest & Reap' };
-  const sorted = [...items].sort((a,b) => new Date(b.timestamp||0) - new Date(a.timestamp||0));
-
-  container.innerHTML = sorted.map(item => {
-    const bodyLines = [];
-    if (item.activityType) bodyLines.push(`<strong>Activity:</strong> ${esc(item.activityType)}${item.duration ? ' — '+esc(item.duration)+' min' : ''}`);
-    if (item.recipeName) bodyLines.push(`<strong>Recipe:</strong> ${esc(item.recipeName)}${item.category ? ' ('+esc(item.category)+')' : ''}`);
-    if (item.ingredients) bodyLines.push(`<strong>Ingredients:</strong> ${esc(item.ingredients)}`);
-    if (item.instructions) bodyLines.push(`<strong>Instructions:</strong> ${esc(item.instructions)}`);
-    if (item.activities) bodyLines.push(`<strong>Activities:</strong> ${esc([].concat(item.activities).join(', '))}`);
-    if (item.description) bodyLines.push(`<strong>Description:</strong> ${esc(item.description)}`);
-    if (item.notes) bodyLines.push(`<strong>Notes:</strong> ${esc(item.notes)}`);
-    const photoHtml = item.photoUrl
-      ? `<div class="pi-photo"><a href="${item.photoUrl}" target="_blank"><img src="${item.photoUrl}" alt="submission photo" /></a></div>`
-      : '';
-    return `<div class="pending-item" id="item-${item.id}">
-      <div class="pi-header">
-        <div>
-          <div class="pi-name">${esc((item.firstName||'')+' '+(item.lastName||''))}</div>
-          <div class="pi-meta">${esc(item.email||'')} · ${monthLabels[item.month]||item.month} · Date: ${item.date||'—'} · Submitted ${new Date(item.timestamp||'').toLocaleDateString()} · <strong>${Number(item.points)||5} pts</strong></div>
-        </div>
-        <div class="pi-badge-approved">✅ Auto-Approved</div>
-      </div>
-      ${bodyLines.length ? `<div class="pi-body">${bodyLines.join('<br/>')}</div>` : ''}
-      ${photoHtml}
-    </div>`;
-  }).join('');
-}
-
-function saveScriptUrl() {
-  const url = document.getElementById('setup-url').value.trim();
-  if (url) {
-    localStorage.setItem('qwq_script_url', url);
-    CONFIG.scriptUrl = url;
-    alert('✅ URL saved! Submissions will now connect to your Google Sheet.');
-    document.getElementById('config-banner').classList.remove('visible');
-  }
-}
-
-// ──────────────────────────────────────────────────────────────
 // HELPERS
 // ──────────────────────────────────────────────────────────────
 function esc(str) {
@@ -1419,11 +1262,6 @@ function esc(str) {
 // INIT
 // ──────────────────────────────────────────────────────────────
 (function init() {
-  // Show config banner if no script URL set
-  if (!CONFIG.scriptUrl) {
-    document.getElementById('config-banner').classList.add('visible');
-  }
-
   // ── Dynamic phase badges based on today's date ──
   (function updatePhaseBadges() {
     const now = new Date();
@@ -1480,10 +1318,7 @@ function esc(str) {
     drop.addEventListener('dragleave', () => drop.classList.remove('drag-over'));
     drop.addEventListener('drop', e => {
       e.preventDefault();
-      drop.classList.remove('drag-over');
-      const file = e.dataTransfer.files[0];
-      if (file) {
-        const inp = document.getElementById('file-' + m);
+             const inp = document.getElementById('file-' + m);
         const dt = new DataTransfer();
         dt.items.add(file);
         inp.files = dt.files;
@@ -1492,16 +1327,8 @@ function esc(str) {
     });
   });
 
-  // Secret admin access via URL hash (#admin)
-  if (window.location.hash === '#admin') showPage('admin');
-
   // Load leaderboard preview
   loadLeaderboard();
-
-  // Pre-fill setup URL field if saved
-  if (CONFIG.scriptUrl) {
-    document.getElementById('setup-url').value = CONFIG.scriptUrl;
-  }
 })();
 </script>
 </body>
