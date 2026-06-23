@@ -617,9 +617,6 @@
   HOME PAGE
 ============================================================ -->
 <div id="page-home" class="page active">
-  <div id="config-banner" class="config-banner">
-    ⚠️ <span>The Apps Script URL isn't configured yet. Submissions won't save until you add it. <a href="#" onclick="showPage('admin');return false;" style="color:#92400E;font-weight:700;">See setup →</a></span>
-  </div>
 
   <div class="hero">
     <h1>☀️ Quantum Wellness Quest</h1>
@@ -1318,7 +1315,10 @@ function esc(str) {
     drop.addEventListener('dragleave', () => drop.classList.remove('drag-over'));
     drop.addEventListener('drop', e => {
       e.preventDefault();
-             const inp = document.getElementById('file-' + m);
+      drop.classList.remove('drag-over');
+      const file = e.dataTransfer.files[0];
+      if (file) {
+        const inp = document.getElementById('file-' + m);
         const dt = new DataTransfer();
         dt.items.add(file);
         inp.files = dt.files;
@@ -1333,3 +1333,4 @@ function esc(str) {
 </script>
 </body>
 </html>
+                                                                                                                                                                                 
