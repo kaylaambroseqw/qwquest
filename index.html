@@ -612,7 +612,6 @@
       <button class="nav-btn active" onclick="showPage('home')">Home</button>
       <button class="nav-btn" onclick="showPage('submit')">Submit</button>
       <button class="nav-btn" onclick="showPage('leaderboard')">Leaderboard</button>
-      <button class="nav-btn admin-btn" onclick="showPage('admin')">Admin</button>
     </div>
   </div>
 </nav>
@@ -626,7 +625,7 @@
   </div>
 
   <div class="hero">
-    <h1> Quantum Wellness Quest: Summer Series 2026 🚀 </h1>
+    <h1>☀️ Quantum Wellness Quest</h1>
     <p>Health isn't just one thing — it's movement, nourishment, and mindset. This summer, we're taking on all three. Earn points, climb the leaderboard, and win prizes along the way!</p>
     <p style="font-weight:700;font-size:.85rem;color:var(--gray-800);max-width:500px;margin:0 auto;line-height:1.7;">✨ Remember: The ultimate prize isn't just what's at the top of the leaderboard—it's feeling stronger, healthier, and more balanced by the end of the summer. Happy questing! 🏆</p>
   </div>
@@ -685,7 +684,7 @@
   <div class="form-panel active" id="panel-june">
     <div class="rules-card" style="background:var(--sun-light);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;max-width:700px;">
       <p style="font-size:.95rem;color:var(--gray-800);margin-bottom:16px;line-height:1.7;">Let's kick off summer by moving! Whether you're walking, running, biking, hiking, dancing, or doing cartwheels across the living room (safely, of course), the goal is simple: 30 minutes of movement a day.</p>
-      <p style="font-weight:700;font-size:1rem;margin-bottom:12px;">⭐ How to participate: <span style="font-weight:500;font-size:.85rem;">(Limit: 1 submission per day!)</span></p>
+      <p style="font-weight:700;font-size:1rem;margin-bottom:12px;">⭐ How to participate:</p>
       <ul style="list-style:disc;padding-left:20px;font-size:.9rem;color:var(--gray-800);line-height:2;">
         <li>Complete at least 30 minutes of movement each day</li>
         <li>Check the leaderboard to track your progress</li>
@@ -777,7 +776,7 @@
   <!-- JULY FORM -->
   <div class="form-panel" id="panel-july">
     <div class="rules-card" style="background:#D1FAE5;border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;max-width:700px;">
-      <p style="font-size:.95rem;color:var(--gray-800);margin-bottom:16px;line-height:1.7;">Good food deserves to be shared. For this challenge, we're building the ultimate QW Cookbook one recipe at a time. From energizing breakfasts and crowd-pleasing dinners to guilt-free desserts and refreshing drinks, we want your favorites! Every submission earns points, and together we'll create a resource the whole company can enjoy.</p>
+      <p style="font-size:.95rem;color:var(--gray-800);margin-bottom:16px;line-height:1.7;">Good food deserves to be shared. This month, we're building the ultimate QW Cookbook one recipe at a time. From energizing breakfasts and crowd-pleasing dinners to guilt-free desserts and refreshing drinks, we want your favorites! Every submission earns points, and together we'll create a resource the whole company can enjoy.</p>
       <p style="font-weight:700;font-size:1rem;margin-bottom:12px;">⭐ How to participate: <span style="font-weight:500;font-size:.85rem;">(Limit: 1 submission per day!)</span></p>
       <ul style="list-style:disc;padding-left:20px;font-size:.9rem;color:var(--gray-800);line-height:2;">
         <li>Earn points for each recipe contributed</li>
@@ -866,7 +865,7 @@
   <!-- AUGUST FORM -->
   <div class="form-panel" id="panel-august">
     <div class="rules-card" style="background:var(--purple-light);border-radius:var(--radius);padding:24px 28px;margin-bottom:20px;max-width:700px;">
-      <p style="font-size:.95rem;color:var(--gray-800);margin-bottom:16px;line-height:1.7;">You've moved. You've fueled. Now it's time to recharge. This challenge is all about giving your mind and body the recovery they deserve. Earn points by practicing mindfulness, hitting your sleep goals, and sharing gratitude along the way. Small moments of rest can have a big impact!</p>
+      <p style="font-size:.95rem;color:var(--gray-800);margin-bottom:16px;line-height:1.7;">You've moved. You've fueled. Now it's time to recharge. August is all about giving your mind and body the recovery they deserve. Earn points by practicing mindfulness, hitting your sleep goals, and sharing gratitude along the way. Small moments of rest can have a big impact!</p>
       <p style="font-weight:700;font-size:1rem;margin-bottom:12px;">⭐ How to participate: <span style="font-weight:500;font-size:.85rem;">(Limit: 1 submission per day!)</span></p>
       <ul style="list-style:disc;padding-left:20px;font-size:.9rem;color:var(--gray-800);line-height:2;">
         <li>Each day, complete a 5-minute meditation, meet your sleep goals, or add affirmations/gratitude notes to the board</li>
@@ -1492,6 +1491,9 @@ function esc(str) {
       }
     });
   });
+
+  // Secret admin access via URL hash (#admin)
+  if (window.location.hash === '#admin') showPage('admin');
 
   // Load leaderboard preview
   loadLeaderboard();
