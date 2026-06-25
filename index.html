@@ -1090,12 +1090,12 @@ async function submitForm(event, month) {
     const now = new Date();
     const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
     if (today < phase.start) {
-      err.textContent = \`⏳ This phase hasn't started yet. Submissions open \${phase.label}.\`;
+      err.textContent = '⏳ This phase has not started yet. Submissions open ' + phase.label + '.';
       err.style.display = 'block';
       return;
     }
     if (today > phase.end) {
-      err.textContent = \`🔒 This phase has ended (\${phase.label}). Submissions are closed.\`;
+      err.textContent = '🔒 This phase has ended (' + phase.label + '). Submissions are closed.';
       err.style.display = 'block';
       return;
     }
